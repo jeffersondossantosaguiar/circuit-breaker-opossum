@@ -5,8 +5,10 @@ import { createClient } from "redis"
 
 const app = express()
 const redisClient = createClient()
-
 const cacheKey = "api-response"
+
+redisClient.on("error", (err) => console.log("Redis Client Error", err))
+redisClient.connect()
 
 const circuitBreakerOptions = {
   timeout: 3000, // Tempo limite para uma solicitação antes de acionar o fallback
@@ -23,17 +25,15 @@ const circuitBreaker = new CircuitBreaker(
   circuitBreakerOptions
 )
 
-redisClient.on("error", (err) => console.log("Redis Client Error", err))
-
-redisClient.connect()
+circuitBreaker
+  .on("close", () => console.log("CLOSE"))
+  .on("open", () => console.log("OPEN"))
+  .on("halfOpen", () => console.log("HALF"))
+  .on("success", () => console.log("SUCCESS"))
 
 // Endpoint para consulta na API externa
 app.get("/", async (req, res) => {
   circuitBreaker
-    /*     .on("close", () => console.log("CLOSE"))
-    .on("open", () => console.log("OPEN"))
-    .on("halfOpen", () => console.log("HALF"))
-    .on("success", () => console.log("SUCCESS")) */
     .fallback(async () => {
       console.log("FALLBACK")
       const data = await redisClient.get(cacheKey)
