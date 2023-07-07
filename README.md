@@ -45,7 +45,7 @@ As configurações do Circuit Breaker, como tempo limite, limite de erro e tempo
 
    ```
 
-2. O `client` estará rodando em http://localhost:3000 e o `server` estará rodando em http://localhost:3001. Você pode fazer uma solicitação GET para http://localhost:3000/ para testar o endpoint e observar o funcionamento do Circuit Breaker.
+2. O `client` estará rodando em http://localhost:8080 e o `server` estará rodando em http://localhost:3001. Você pode fazer uma solicitação GET para http://localhost:8080/ para testar o endpoint e observar o funcionamento do Circuit Breaker.
 
 ## Recursos adicionais
 
