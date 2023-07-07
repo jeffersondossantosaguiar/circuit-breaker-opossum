@@ -30,12 +30,12 @@ circuitBreaker
   .on("open", () => console.log("OPEN"))
   .on("halfOpen", () => console.log("HALF"))
   .on("success", () => console.log("SUCCESS"))
+  .on("fallback", () => console.log("FALLBACK"))
 
 // Endpoint para consulta na API externa
 app.get("/", async (req, res) => {
   circuitBreaker
     .fallback(async () => {
-      console.log("FALLBACK")
       const data = await redisClient.get(cacheKey)
 
       if (!data) throw new Error("Erro Interno")
