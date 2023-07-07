@@ -3,7 +3,7 @@ import express from "express"
 const app = express()
 
 app.use(function (req, res, next) {
-  setTimeout(next, 2000)
+  setTimeout(next, 4000)
 })
 
 app.get("/", (req, res) => {
