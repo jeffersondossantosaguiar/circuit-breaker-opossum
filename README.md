@@ -16,13 +16,14 @@ Certifique-se de ter o Node.js e o Docker Compose instalado em seu ambiente de d
 
    ```
 
-2. Instale as dependências do projeto server:
+2. Instale as dependências e inicie do projeto server:
 
    ```shell
    $ npm install
+   $ npm run start
    ```
 
-3. Execute o docker-compose:
+3. Execute o docker-compose do projeto client:
 
    ```shell
    $ docker-compose up
