@@ -4,23 +4,23 @@ import CircuitBreaker from "opossum"
 
 const app = express()
 
-const circuitBreakerOptions = {
-  timeout: 3000, // Tempo limite para uma solicitação antes de acionar o fallback
-  errorThresholdPercentage: 50, // Porcentagem de erros antes de acionar o fallback
-  resetTimeout: 10000 // Tempo de espera antes de tentar reabrir o circuito
-}
-
-function asyncFunctionThatCouldFail() {
-  return axios.get("http://localhost:3001")
-}
-
-const circuitBreaker = new CircuitBreaker(
-  asyncFunctionThatCouldFail,
-  circuitBreakerOptions
-)
-
 // Endpoint para consulta na API externa
 app.get("/", (req, res) => {
+  const circuitBreakerOptions = {
+    timeout: 3000, // Tempo limite para uma solicitação antes de acionar o fallback
+    errorThresholdPercentage: 50, // Porcentagem de erros antes de acionar o fallback
+    resetTimeout: 10000 // Tempo de espera antes de tentar reabrir o circuito
+  }
+
+  function asyncFunctionThatCouldFail() {
+    return axios.get("http://localhost:3001")
+  }
+
+  const circuitBreaker = new CircuitBreaker(
+    asyncFunctionThatCouldFail,
+    circuitBreakerOptions
+  )
+
   circuitBreaker
     .on("close", () => console.log("CLOSE"))
     .on("open", () => console.log("OPEN"))
@@ -37,6 +37,6 @@ app.get("/", (req, res) => {
     })
 })
 
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000")
+app.listen(8080, () => {
+  console.log("Servidor rodando na porta 8080!")
 })

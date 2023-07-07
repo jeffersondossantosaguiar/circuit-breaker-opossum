@@ -3,11 +3,16 @@ import express from "express"
 const app = express()
 
 app.use(function (req, res, next) {
-  setTimeout(next, 2000)
+  setTimeout(next, 4000)
 })
 
 app.get("/", (req, res) => {
-  res.send("Ok")
+  const product = {
+    id: 1,
+    title: "iphone",
+    price: "1.999"
+  }
+  res.send(JSON.stringify(product))
 })
 
 app.listen(3001, () => {
