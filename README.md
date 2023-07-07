@@ -1,10 +1,10 @@
 # Implementação do Circuit Breaker com a biblioteca Opossum
 
-Este repositório contém um exemplo simples de implementação do padrão Circuit Breaker em uma API Node.js usando a biblioteca Opossum. O Circuit Breaker é um padrão de design usado para melhorar a resiliência e a estabilidade de sistemas distribuídos, evitando chamadas repetidas a serviços externos indisponíveis ou com comportamento anormal.
+Este repositório contém um exemplo simples de implementação do padrão Circuit Breaker em uma API Node.js usando a biblioteca Opossum e cache usando o Redis. O Circuit Breaker é um padrão de design usado para melhorar a resiliência e a estabilidade de sistemas distribuídos, evitando chamadas repetidas a serviços externos indisponíveis ou com comportamento anormal.
 
 ## Pré-requisitos
 
-Certifique-se de ter o Node.js instalado em seu ambiente de desenvolvimento.
+Certifique-se de ter o Node.js e o Docker Compose instalado em seu ambiente de desenvolvimento.
 
 ## Instalação
 
@@ -16,17 +16,23 @@ Certifique-se de ter o Node.js instalado em seu ambiente de desenvolvimento.
 
    ```
 
-2. Instale as dependências do projeto:
+2. Instale as dependências do projeto server:
 
    ```shell
    $ npm install
+   ```
+
+3. Execute o docker-compose:
+
+   ```shell
+   $ docker-compose up
    ```
 
 ## Como funciona
 
 Neste exemplo, criei uma API Node.js simples usando o framework Express e TypeScript. Implementamos um endpoint no `client` que faz uma chamada a uma API para o `server` usando o Axios. O Circuit Breaker é implementado usando a biblioteca Opossum.
 
-Quando uma solicitação é feita ao `server`, o Circuit Breaker envolve a chamada ao serviço externo e monitora as respostas. Se o serviço externo estiver indisponível ou apresentar um comportamento anormal, o Circuit Breaker ativará um fallback, retornando uma resposta alternativa sem chamar o serviço externo.
+Quando uma solicitação é feita ao `server`, o Circuit Breaker envolve a chamada ao serviço externo e monitora as respostas. Se o serviço externo estiver indisponível ou apresentar um comportamento anormal, o Circuit Breaker ativará um fallback, retornando uma resposta alternativa sem chamar o serviço externo (cache).
 
 As configurações do Circuit Breaker, como tempo limite, limite de erro e tempo de espera para reabrir o circuito, podem ser ajustadas no arquivo `client\server.ts` de acordo com as necessidades.
 
